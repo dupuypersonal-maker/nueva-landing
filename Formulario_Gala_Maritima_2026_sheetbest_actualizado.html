@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario · Gala Marítima Panamá 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:     #060606;
+    --navy2:    #0C0C0C;
+    --navy3:    #111111;
+    --gold:     #C9A84C;
+    --gold2:    #E8C96A;
+    --gold3:    #F5E4A8;
+    --teal:     #1A6E65;
+    --cream:    #F0EBE0;
+    --white:    #FFFFFF;
+    --text:     #FFFFFF;
+    --muted:    rgba(255,255,255,0.45);
+    --border:   rgba(201,168,76,0.2);
+    --border2:  rgba(201,168,76,0.45);
+    --glass:    rgba(255,255,255,0.03);
+    --error:    #FC8181;
+    --success:  #C9A84C;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    background: #060606;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+    padding: 0;
+  }
+
+  /* background texture removed */
+
+  /* Subtle grid overlay */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .form-wrapper {
+    position: relative; z-index: 1; padding-top: 80px;
+    width: 100%; max-width: 680px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 16px 32px;
+  }
+
+  /* ── HEADER ─────────────────────────── */
+  .form-header {
+    text-align: center;
+    margin-bottom: 28px;
+    animation: fadeDown 0.6s ease both;
+  }
+  .form-header-eyebrow {
+    font-size: 10px; font-weight: 600; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 12px; display: block;
+  }
+  .form-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px; font-weight: 700; line-height: 1.05;
+    color: var(--white);
+    letter-spacing: -1px;
+  }
+  .form-header h1 em {
+    font-style: italic; color: var(--gold2);
+  }
+  .form-header-sub {
+    font-size: 13px; color: rgba(255,255,255,0.5);
+    font-weight: 300; letter-spacing: 0.3px;
+  }
+  .header-divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 16px auto;
+  }
+
+  /* ── CARD ────────────────────────────── */
+  .form-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 40px;
+    backdrop-filter: blur(12px);
+    animation: fadeUp 0.7s ease both;
+    animation-delay: 0.1s;
+  }
+
+  /* ── PORTERO ─────────────────────────── */
+  .portero-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600;
+    color: var(--white); margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .portero-sub {
+    font-size: 12px; color: rgba(255,255,255,0.4);
+    margin-bottom: 24px; font-weight: 300;
+  }
+
+  .portero-options {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 0;
+  }
+
+  .portero-btn {
+    position: relative;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 16px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.25s ease;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .portero-btn:hover {
+    background: rgba(201,168,76,0.06);
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+  .portero-btn.selected {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+    box-shadow: 0 0 0 1px rgba(201,168,76,0.3), inset 0 1px 0 rgba(201,168,76,0.1);
+  }
+  .portero-btn-icon {
+    font-size: 24px; margin-bottom: 2px;
+  }
+  .portero-btn-title {
+    font-size: 15px; font-weight: 600;
+    color: var(--white); line-height: 1.2;
+  }
+  .portero-btn-desc {
+    font-size: 11px; color: rgba(255,255,255,0.45);
+    font-weight: 300; line-height: 1.4;
+  }
+  .portero-btn .check-dot {
+    position: absolute; top: 12px; right: 12px;
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 1.5px solid rgba(201,168,76,0.3);
+    background: transparent;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .portero-btn.selected .check-dot {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .portero-btn.selected .check-dot::after {
+    content: '✓';
+    font-size: 11px; font-weight: 700;
+    color: var(--navy); line-height: 1;
+  }
+
+  /* ── TRACK FORM ──────────────────────── */
+  .track-form {
+    display: none;
+    animation: fadeUp 0.4s ease both;
+  }
+  .track-form.visible { display: block; }
+
+  .track-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 28px 0 28px;
+  }
+  .track-divider::before, .track-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: var(--border);
+  }
+  .track-divider span {
+    font-size: 10px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold);
+    white-space: nowrap;
+  }
+
+  /* ── FIELD GROUPS ────────────────────── */
+  .fields-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 20px;
+  }
+  .fields-grid .full { grid-column: 1 / -1; }
+  .field-group-spacious { margin-top: 12px; }
+  .field-group-spacious .field-label { margin-bottom: 10px; display: block; }
+  .field-group-spacious .radio-group { gap: 10px; }
+  .field-group-spacious .radio-item { padding: 15px 18px; }
+
+  .field-group {
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .field-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+  .field-label .req { color: var(--gold); margin-left: 2px; }
+
+  .field-input {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 8px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 300;
+    padding: 13px 16px; width: 100%;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .field-input::placeholder { color: rgba(255,255,255,0.25); }
+  .field-input:focus {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+  }
+  .field-input.error {
+    border-color: var(--error);
+    box-shadow: 0 0 0 3px rgba(229,62,62,0.1);
+  }
+  .field-error {
+    font-size: 11px; color: #FC8181;
+    display: none;
+  }
+  .field-error.visible { display: block; }
+
+  select.field-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+  select.field-input option {
+    background: var(--navy2);
+    color: var(--white);
+  }
+
+  /* ── CHECKBOX GROUP ──────────────────── */
+  .checkbox-group {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .checkbox-item {
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.02);
+    transition: all 0.15s;
+  }
+  .checkbox-item:hover {
+    background: rgba(255,255,255,0.03);
+    border-color: var(--border);
+  }
+  .checkbox-item input[type="checkbox"] { display: none; }
+  .checkbox-custom {
+    width: 16px; height: 16px; flex-shrink: 0;
+    border: 1.5px solid rgba(201,168,76,0.4);
+    border-radius: 4px; background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .checkbox-item input:checked + .checkbox-custom {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .checkbox-item input:checked + .checkbox-custom::after {
+    content: '✓'; font-size: 10px;
+    font-weight: 700; color: var(--navy);
+  }
+  .checkbox-item-label {
+    font-size: 13px; color: rgba(255,255,255,0.75);
+    font-weight: 400;
+  }
+
+  /* ── RADIO GROUP ─────────────────────── */
+  .radio-group {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .radio-item {
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer;
+    padding: 13px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.02);
+    transition: all 0.15s;
+  }
+  .radio-item:hover {
+    background: rgba(201,168,76,0.05);
+    border-color: var(--border);
+  }
+  .radio-item.selected {
+    background: rgba(201,168,76,0.08);
+    border-color: var(--gold);
+  }
+  .radio-item input[type="radio"] { display: none; }
+  .radio-custom {
+    width: 16px; height: 16px; flex-shrink: 0;
+    border: 1.5px solid rgba(201,168,76,0.4);
+    border-radius: 50%; background: transparent;
+    transition: all 0.15s; position: relative;
+  }
+  .radio-item.selected .radio-custom {
+    border-color: var(--gold);
+  }
+  .radio-item.selected .radio-custom::after {
+    content: '';
+    position: absolute; inset: 3px;
+    border-radius: 50%; background: var(--gold);
+  }
+  .radio-item-label {
+    font-size: 13px; color: rgba(255,255,255,0.8);
+    font-weight: 400;
+  }
+
+  /* ── SUBMIT BUTTON ───────────────────── */
+  .submit-btn {
+    width: 100%; margin-top: 28px;
+    padding: 16px 24px;
+    background: var(--gold);
+    color: #060606;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase;
+    border: none; border-radius: 8px;
+    cursor: pointer; transition: all 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(201,168,76,0.3);
+    background: linear-gradient(135deg, var(--gold2), var(--gold));
+  }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+  }
+  .submit-btn:hover::before { transform: translateX(100%); }
+
+  /* ── SUCCESS STATE ───────────────────── */
+  .success-screen {
+    display: none; text-align: center;
+    padding: 20px 0;
+    animation: fadeUp 0.5s ease both;
+  }
+  .success-screen.visible { display: block; }
+  .success-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 28px;
+    background: rgba(201,168,76,0.1);
+  }
+  .success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 600;
+    color: var(--white); margin-bottom: 10px;
+  }
+  .success-sub {
+    font-size: 14px; color: rgba(255,255,255,0.5);
+    margin-bottom: 28px; line-height: 1.6;
+    font-weight: 300;
+  }
+  .success-cta-group {
+    display: flex; flex-direction: column; gap: 10px;
+    align-items: center;
+  }
+  .success-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 24px; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    min-width: 280px; justify-content: center;
+  }
+  .btn-whatsapp {
+    background: #25D366; color: #fff;
+  }
+  .btn-whatsapp:hover {
+    background: #1FAD54;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37,211,102,0.3);
+  }
+  .btn-email {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.8);
+  }
+  .btn-email:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-1px);
+  }
+  .success-note {
+    font-size: 11px; color: rgba(255,255,255,0.3);
+    margin-top: 16px; font-style: italic;
+  }
+
+  /* ── PROGRESS BAR ────────────────────── */
+  .form-progress {
+    display: none;
+    margin-bottom: 24px;
+  }
+  .form-progress.visible { display: block; }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: rgba(255,255,255,0.35);
+    margin-bottom: 6px;
+  }
+  .progress-bar {
+    height: 2px; background: rgba(255,255,255,0.08);
+    border-radius: 2px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  /* ── FOOTER ──────────────────────────── */
+  .form-footer {
+    position: relative; z-index: 1;
+    width: 100%;
+    text-align: center;
+    padding: 20px 16px 28px;
+    font-size: 11px; color: rgba(255,255,255,0.2);
+    animation: fadeUp 0.8s ease both;
+    animation-delay: 0.2s;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 0;
+  }
+
+  /* ── ANIMATIONS ──────────────────────── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ──────────────────────── */
+  @media (max-width: 560px) {
+    .form-card { padding: 24px 20px; }
+    .fields-grid { grid-template-columns: 1fr; }
+    .fields-grid .full { grid-column: 1; }
+    .portero-options { grid-template-columns: 1fr; }
+    .form-header h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+<nav style="
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 20px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(6,6,6,0.94); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+">
+  <div style="font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:#fff; letter-spacing:0.5px;">
+    Gala Marítima <span style="color:#C9A84C;">· Panamá</span>
+  </div>
+  <div style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.35);">
+    Formulario de contacto
+  </div>
+</nav>
+
+<div class="form-wrapper">
+
+  <!-- HEADER -->
+  <div class="form-header">
+    <span class="form-header-eyebrow">Cámara Marítima de Panamá</span>
+    <h1>Gala Marítima<br><em>Panamá 2026</em></h1>
+    <div class="header-divider"></div>
+    <p class="form-header-sub">6 de mayo · Megapolis Convention Center</p>
+  </div>
+
+  <!-- CARD -->
+  <div class="form-card">
+
+    <!-- PORTERO -->
+    <div id="portero-section">
+      <p class="portero-label">¿Cuál es tu interés en la Gala?</p>
+      <p class="portero-sub">Selecciona una opción para continuar</p>
+      <div class="portero-options">
+        <button class="portero-btn" onclick="selectTrack('sponsor')" id="btn-sponsor" type="button">
+          <div class="check-dot"></div>
+          <div class="portero-btn-icon">🤝</div>
+          <div class="portero-btn-title">Quiero patrocinar el evento</div>
+          <div class="portero-btn-desc">Conoce los paquetes de patrocinio y beneficios para tu empresa</div>
+        </button>
+        <button class="portero-btn" onclick="selectTrack('attendee')" id="btn-attendee" type="button">
+          <div class="check-dot"></div>
+          <div class="portero-btn-icon">🎟</div>
+          <div class="portero-btn-title">Quiero asistir como invitado</div>
+          <div class="portero-btn-desc">Obtén información sobre entradas y acceso al evento</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- TRACK: PATROCINADOR -->
+    <div id="track-sponsor" class="track-form">
+      <div class="track-divider"><span>Información de Patrocinio</span></div>
+
+      <div class="form-progress visible" id="progress-sponsor">
+        <div class="progress-label">
+          <span>Completa tu información</span>
+          <span id="progress-pct-sponsor">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-bar-sponsor" style="width:0%"></div></div>
+      </div>
+
+      <form id="form-sponsor" novalidate>
+        <div class="fields-grid">
+
+          <div class="field-group">
+            <label class="field-label">Nombre completo <span class="req">*</span></label>
+            <input class="field-input" type="text" id="s-nombre" placeholder="Tu nombre" required>
+            <span class="field-error" id="err-s-nombre">Campo requerido</span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Cargo <span class="req">*</span></label>
+            <input class="field-input" type="text" id="s-cargo" placeholder="Director General, CEO..." required>
+            <span class="field-error" id="err-s-cargo">Campo requerido</span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Empresa <span class="req">*</span></label>
+            <input class="field-input" type="text" id="s-empresa" placeholder="Nombre de tu empresa" required>
+            <span class="field-error" id="err-s-empresa">Campo requerido</span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Sector <span class="req">*</span></label>
+            <select class="field-input" id="s-sector" required>
+              <option value="" disabled selected>Selecciona tu sector</option>
+              <option>Naviera / Agencia marítima</option>
+              <option>Operador portuario</option>
+              <option>Banca corporativa</option>
+              <option>Seguros marítimos</option>
+              <option>Servicios legales</option>
+              <option>Logística / Freight forwarding</option>
+              <option>Tecnología logística</option>
+              <option>Otro</option>
+            </select>
+            <span class="field-error" id="err-s-sector">Selecciona un sector</span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Email corporativo <span class="req">*</span></label>
+            <input class="field-input" type="email" id="s-email" placeholder="tu@empresa.com" required>
+            <span class="field-error" id="err-s-email">Email válido requerido</span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">WhatsApp / Teléfono <span class="req">*</span></label>
+            <input class="field-input" type="tel" id="s-telefono" placeholder="+507 6000-0000" required>
+            <span class="field-error" id="err-s-telefono">Campo requerido</span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Tamaño de empresa <span class="req">*</span></label>
+            <select class="field-input" id="s-tamano" required>
+              <option value="" disabled selected>Número de empleados</option>
+              <option>1 – 10</option>
+              <option>11 – 50</option>
+              <option>51 – 200</option>
+              <option>200+</option>
+            </select>
+            <span class="field-error" id="err-s-tamano">Selecciona una opción</span>
+          </div>
+
+          <div class="field-group full">
+            <label class="field-label">¿Tu empresa opera a nivel...? <span class="req">*</span></label>
+            <div class="radio-group" id="s-alcance-group">
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="alcance" value="panama">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Solo Panamá</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="alcance" value="centroamerica">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Centroamérica y el Caribe</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="alcance" value="latam">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Latinoamérica</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="alcance" value="global">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Global</span>
+              </label>
+            </div>
+            <span class="field-error" id="err-s-alcance">Selecciona una opción</span>
+          </div>
+
+          <div class="field-group full">
+            <label class="field-label">¿Tu empresa ha patrocinado eventos del sector anteriormente? <span class="req">*</span></label>
+            <div class="radio-group" id="s-previo-group">
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="previo" value="frecuencia">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Sí, lo hacemos con frecuencia</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="previo" value="ocasion">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Sí, en alguna ocasión</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="previo" value="considerado">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Lo hemos considerado pero no lo hemos hecho</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="previo" value="primera">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Es la primera vez que evaluamos esta posibilidad</span>
+              </label>
+            </div>
+            <span class="field-error" id="err-s-previo">Selecciona una opción</span>
+          </div>
+
+          <div class="field-group full">
+            <label class="field-label">Nivel de interés actual <span class="req">*</span></label>
+            <div class="radio-group" id="s-interes">
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="interes" value="explorando">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Explorando opciones</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="interes" value="presupuesto">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Tengo presupuesto asignado</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="interes" value="decidir">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Listo para decidir</span>
+              </label>
+            </div>
+            <span class="field-error" id="err-s-interes">Selecciona una opción</span>
+          </div>
+
+          <div class="field-group full">
+            <label class="field-label">¿Qué espera obtener del patrocinio? <span class="req">*</span></label>
+            <div class="checkbox-group" id="s-objetivo">
+              <label class="checkbox-item">
+                <input type="checkbox" name="objetivo" value="visibilidad">
+                <div class="checkbox-custom"></div>
+                <span class="checkbox-item-label">Visibilidad de marca</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="objetivo" value="networking">
+                <div class="checkbox-custom"></div>
+                <span class="checkbox-item-label">Networking con decisores del sector</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="objetivo" value="posicionamiento">
+                <div class="checkbox-custom"></div>
+                <span class="checkbox-item-label">Posicionamiento sectorial</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="objetivo" value="negocios">
+                <div class="checkbox-custom"></div>
+                <span class="checkbox-item-label">Generación de negocios directos</span>
+              </label>
+            </div>
+            <span class="field-error" id="err-s-objetivo">Selecciona al menos una opción</span>
+          </div>
+
+          <div class="field-group full field-group-spacious">
+            <label class="field-label">¿Cómo prefiere que lo contactemos? <span class="req">*</span></label>
+            <div class="radio-group" id="s-contacto">
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="contacto" value="whatsapp">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">WhatsApp</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="contacto" value="llamada">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Llamada telefónica</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="contacto" value="email">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Email</span>
+              </label>
+            </div>
+            <span class="field-error" id="err-s-contacto">Selecciona una opción</span>
+          </div>
+
+        </div>
+
+          <div class="field-group full field-group-spacious">
+            <label class="field-label">¿Eres tú quien toma la decisión final de patrocinio en tu empresa? <span class="req">*</span></label>
+            <div class="radio-group" id="s-decision-group">
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="decision" value="yo-decido">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Sí, yo decido</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="decision" value="con-socio">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Lo decido junto con un socio o codirector</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="decision" value="aprobacion-ceo">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Necesito aprobación de mi CEO o junta directiva</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="decision" value="recomienda">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Soy quien recomienda pero no decido</span>
+              </label>
+            </div>
+            <span class="field-error" id="err-s-decision">Selecciona una opción</span>
+          </div>
+
+          <div class="field-group full field-group-spacious">
+            <label class="field-label">¿Cuentas con presupuesto disponible para patrocinios en 2026? <span class="req">*</span></label>
+            <div class="radio-group" id="s-presupuesto-group">
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="presupuesto" value="disponible">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Sí, tenemos presupuesto disponible</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="presupuesto" value="evaluacion">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Está en proceso de evaluación</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="presupuesto" value="direccion">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Necesito presentarlo a mi dirección</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="presupuesto" value="no-contemplado">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Aún no lo hemos contemplado</span>
+              </label>
+            </div>
+            <span class="field-error" id="err-s-presupuesto">Selecciona una opción</span>
+          </div>
+
+          <div class="field-group full field-group-spacious">
+            <label class="field-label">¿Cuál es el rango de inversión que considerarías? <span class="req">*</span></label>
+            <div class="radio-group" id="s-rango-group">
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="rango" value="hasta-2500">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Hasta $2,500</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="rango" value="2500-5000">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">$2,500 a $5,000</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="rango" value="5000-10000">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">$5,000 a $10,000</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="rango" value="mas-10000">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Más de $10,000</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="rango" value="no-definido">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Aún no lo he definido</span>
+              </label>
+            </div>
+            <span class="field-error" id="err-s-rango">Selecciona una opción</span>
+          </div>
+
+          <div class="field-group full field-group-spacious">
+            <label class="field-label">¿Hay algo específico que quieras conocer antes de tu reunión?</label>
+            <textarea class="field-input" id="s-comentario" placeholder="Cuéntanos qué información te sería más útil tener antes de conversar con nuestro equipo..." rows="3" style="resize:vertical; min-height:80px;"></textarea>
+          </div>
+
+        </div>
+
+        <button type="submit" class="submit-btn" style="margin-top:36px;">
+          <span>Enviar información</span>
+          <span>→</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- TRACK: ASISTENTE -->
+    <div id="track-attendee" class="track-form">
+      <div class="track-divider"><span>Información de Asistencia</span></div>
+
+      <form id="form-attendee" novalidate>
+        <div class="fields-grid">
+
+          <div class="field-group">
+            <label class="field-label">Nombre completo <span class="req">*</span></label>
+            <input class="field-input" type="text" id="a-nombre" placeholder="Tu nombre" required>
+            <span class="field-error" id="err-a-nombre">Campo requerido</span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Cargo <span class="req">*</span></label>
+            <input class="field-input" type="text" id="a-cargo" placeholder="Tu cargo actual" required>
+            <span class="field-error" id="err-a-cargo">Campo requerido</span>
+          </div>
+
+          <div class="field-group full">
+            <label class="field-label">Empresa <span class="req">*</span></label>
+            <input class="field-input" type="text" id="a-empresa" placeholder="Nombre de tu empresa" required>
+            <span class="field-error" id="err-a-empresa">Campo requerido</span>
+          </div>
+
+          <div class="field-group full">
+            <label class="field-label">Email de contacto <span class="req">*</span></label>
+            <input class="field-input" type="email" id="a-email" placeholder="tu@email.com" required>
+            <span class="field-error" id="err-a-email">Email válido requerido</span>
+          </div>
+
+          <div class="field-group full">
+            <label class="field-label">Tipo de entrada que te interesa <span class="req">*</span></label>
+            <div class="radio-group" id="a-entrada">
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="entrada" value="individual">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Entrada individual</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="entrada" value="mesa">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Mesa corporativa</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="entrada" value="nosé">
+                <div class="radio-custom"></div>
+                <span class="radio-item-label">Aún no lo sé, quiero más información</span>
+              </label>
+            </div>
+            <span class="field-error" id="err-a-entrada">Selecciona una opción</span>
+          </div>
+
+          <div class="field-group full">
+            <label class="field-label">¿Cómo te enteraste de la Gala? <span class="req">*</span></label>
+            <select class="field-input" id="a-fuente" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>LinkedIn</option>
+              <option>Instagram</option>
+              <option>TikTok</option>
+              <option>WhatsApp</option>
+              <option>Referido / Colega</option>
+              <option>Cámara Marítima de Panamá</option>
+              <option>Otro</option>
+            </select>
+            <span class="field-error" id="err-a-fuente">Selecciona una opción</span>
+          </div>
+
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span>Solicitar información</span>
+          <span>→</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- SUCCESS: PATROCINADOR -->
+    <div id="success-sponsor" class="success-screen">
+      <div class="success-icon">🤝</div>
+      <h2 class="success-title">¡Recibimos tu información!</h2>
+      <p class="success-sub">Un miembro de nuestro equipo se comunicará contigo<br>en menos de <strong style="color:var(--gold)">24 horas</strong> para darte todos los detalles<br>sobre las oportunidades de patrocinio.</p>
+      <div class="success-cta-group">
+        <a id="wa-link-sponsor" href="#" class="success-btn btn-whatsapp" target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Conectar por WhatsApp
+        </a>
+        <p class="success-note">También puedes esperar a que te contactemos directamente.</p>
+      </div>
+    </div>
+
+    <!-- SUCCESS: ASISTENTE -->
+    <div id="success-attendee" class="success-screen">
+      <div class="success-icon">🎟</div>
+      <h2 class="success-title">¡Listo, te tenemos en cuenta!</h2>
+      <p class="success-sub">Nos pondremos en contacto contigo con toda la información<br>sobre entradas y acceso a la Gala Marítima Panamá 2026.</p>
+      <div class="success-cta-group">
+        <a id="email-link-attendee" href="#" class="success-btn btn-email" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+          Escribirnos por email
+        </a>
+        <p class="success-note">Revisaremos tu solicitud y te responderemos pronto.</p>
+      </div>
+    </div>
+
+  </div><!-- /form-card -->
+
+  <!-- FOOTER -->
+</div><!-- /form-wrapper -->
+
+<div class="form-footer">
+  Cámara Marítima de Panamá &nbsp;·&nbsp; Documento confidencial &nbsp;·&nbsp; Información tratada con privacidad
+</div>
+
+<script>
+  // ── CONFIG (reemplazar con datos reales) ──────────
+  const CONFIG = {
+    whatsappNumber:  '50760000000',                    // ← cambia por el número real del equipo CMP
+    contactEmail:    'gala@camaramaritima.org.pa',     // ← email real CMP
+    sheetBestURL:    'https://api.sheetbest.com/sheets/32fa92e1-7720-477a-9a07-50480cb14bf9', // ← API de Sheet.best
+  };
+
+  // ── PORTERO ────────────────────────────────────────
+  function selectTrack(track) {
+    document.getElementById('btn-sponsor').classList.remove('selected');
+    document.getElementById('btn-attendee').classList.remove('selected');
+    document.getElementById('track-sponsor').classList.remove('visible');
+    document.getElementById('track-attendee').classList.remove('visible');
+
+    document.getElementById('btn-' + track).classList.add('selected');
+
+    setTimeout(() => {
+      document.getElementById('track-' + track).classList.add('visible');
+      document.getElementById('track-' + track).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
+
+  // ── RADIO SELECTION ────────────────────────────────
+  function selectRadio(item) {
+    const name = item.querySelector('input[type="radio"]').name;
+    document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+      r.closest('.radio-item').classList.remove('selected');
+    });
+    item.classList.add('selected');
+    updateProgress();
+  }
+
+  // ── PROGRESS BAR (sponsor) ─────────────────────────
+  function updateProgress() {
+    const fields = [
+      document.getElementById('s-nombre'),
+      document.getElementById('s-cargo'),
+      document.getElementById('s-empresa'),
+      document.getElementById('s-sector'),
+      document.getElementById('s-email'),
+      document.getElementById('s-telefono'),
+      document.getElementById('s-tamano'),
+    ];
+    const radios = ['alcance', 'previo', 'interes', 'decision', 'presupuesto', 'rango', 'contacto'];
+    const checks = document.querySelectorAll('input[name="objetivo"]:checked');
+
+    let filled = 0;
+    const total = fields.length + radios.length + 1; // radios now includes alcance, previo, presupuesto, rango
+
+    fields.forEach(f => { if (f && f.value.trim()) filled++; });
+    radios.forEach(name => { if (document.querySelector(`input[name="${name}"]:checked`)) filled++; });
+    if (checks.length > 0) filled++;
+
+    const pct = Math.round((filled / total) * 100);
+    document.getElementById('progress-bar-sponsor').style.width = pct + '%';
+    document.getElementById('progress-pct-sponsor').textContent = pct + '%';
+  }
+
+  // Attach progress listeners
+  document.querySelectorAll('#form-sponsor .field-input').forEach(el => {
+    el.addEventListener('input', updateProgress);
+    el.addEventListener('change', updateProgress);
+  });
+  document.querySelectorAll('#form-sponsor input[type="checkbox"]').forEach(el => {
+    el.addEventListener('change', updateProgress);
+  });
+
+  // ── VALIDATION ─────────────────────────────────────
+  function showError(id, msg) {
+    const el = document.getElementById(id);
+    const input = document.getElementById(id.replace('err-', ''));
+    if (el) { el.textContent = msg || el.textContent; el.classList.add('visible'); }
+    if (input) input.classList.add('error');
+  }
+  function clearError(id) {
+    const el = document.getElementById(id);
+    const input = document.getElementById(id.replace('err-', ''));
+    if (el) el.classList.remove('visible');
+    if (input) input.classList.remove('error');
+  }
+
+  // Clear on input
+  document.querySelectorAll('.field-input').forEach(el => {
+    el.addEventListener('input', () => {
+      el.classList.remove('error');
+      const errEl = document.querySelector(`[id="err-${el.id}"]`);
+      if (errEl) errEl.classList.remove('visible');
+    });
+  });
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function validateSponsor() {
+    let valid = true;
+    const req = ['s-nombre','s-cargo','s-empresa','s-sector','s-email','s-telefono','s-tamano'];
+    req.forEach(id => {
+      const el = document.getElementById(id);
+      clearError('err-' + id);
+      if (!el.value.trim()) { showError('err-' + id); valid = false; }
+    });
+    if (!validateEmail(document.getElementById('s-email').value)) {
+      showError('err-s-email', 'Ingresa un email válido'); valid = false;
+    }
+    if (!document.querySelector('input[name="interes"]:checked')) {
+      showError('err-s-interes'); valid = false;
+    } else { clearError('err-s-interes'); }
+    if (!document.querySelector('input[name="contacto"]:checked')) {
+      showError('err-s-contacto'); valid = false;
+    } else { clearError('err-s-contacto'); }
+    if (!document.querySelector('input[name="objetivo"]:checked')) {
+      showError('err-s-objetivo'); valid = false;
+    } else { clearError('err-s-objetivo'); }
+    return valid;
+  }
+
+  function validateAttendee() {
+    let valid = true;
+    const req = ['a-nombre','a-cargo','a-empresa','a-email','a-fuente'];
+    req.forEach(id => {
+      const el = document.getElementById(id);
+      clearError('err-' + id);
+      if (!el.value.trim()) { showError('err-' + id); valid = false; }
+    });
+    if (!validateEmail(document.getElementById('a-email').value)) {
+      showError('err-a-email', 'Ingresa un email válido'); valid = false;
+    }
+    if (!document.querySelector('input[name="entrada"]:checked')) {
+      showError('err-a-entrada'); valid = false;
+    } else { clearError('err-a-entrada'); }
+    return valid;
+  }
+
+  // ── COLLECT DATA ───────────────────────────────────
+  function collectSponsor() {
+    const objetivos = [...document.querySelectorAll('input[name="objetivo"]:checked')]
+      .map(c => c.value).join(', ');
+    return {
+      nombre:      document.getElementById('s-nombre').value.trim(),
+      cargo:       document.getElementById('s-cargo').value.trim(),
+      empresa:     document.getElementById('s-empresa').value.trim(),
+      sector:      document.getElementById('s-sector').value,
+      email:       document.getElementById('s-email').value.trim(),
+      telefono:    document.getElementById('s-telefono').value.trim(),
+      tamano:      document.getElementById('s-tamano').value,
+      alcance:     document.querySelector('input[name="alcance"]:checked')?.value,
+      previo:      document.querySelector('input[name="previo"]:checked')?.value,
+      interes:     document.querySelector('input[name="interes"]:checked')?.value,
+      objetivo:    objetivos,
+      decision:    document.querySelector('input[name="decision"]:checked')?.value,
+      presupuesto: document.querySelector('input[name="presupuesto"]:checked')?.value,
+      rango:       document.querySelector('input[name="rango"]:checked')?.value,
+      comentario:  document.getElementById('s-comentario').value.trim(),
+      contacto:    document.querySelector('input[name="contacto"]:checked')?.value,
+    };
+  }
+
+  function collectAttendee() {
+    return {
+      nombre:  document.getElementById('a-nombre').value.trim(),
+      cargo:   document.getElementById('a-cargo').value.trim(),
+      empresa: document.getElementById('a-empresa').value.trim(),
+      email:   document.getElementById('a-email').value.trim(),
+      entrada: document.querySelector('input[name="entrada"]:checked')?.value,
+      fuente:  document.getElementById('a-fuente').value,
+    };
+  }
+
+  // ── SUCCESS SCREENS ────────────────────────────────
+  function showSuccess(track, data) {
+    // Hide form elements
+    document.getElementById('portero-section').style.display = 'none';
+    document.getElementById('track-sponsor').classList.remove('visible');
+    document.getElementById('track-attendee').classList.remove('visible');
+
+    if (track === 'sponsor') {
+      // WhatsApp pre-filled message
+      const msg = encodeURIComponent(
+        `Hola, acabo de completar el formulario de patrocinio de la Gala Marítima Panamá 2026.\n\n` +
+        `Mi nombre es ${data.nombre}, soy ${data.cargo} en ${data.empresa} (sector: ${data.sector}).\n` +
+        `Nivel de interés: ${data.interes}.\n\nQuedo atento a su contacto.`
+      );
+      document.getElementById('wa-link-sponsor').href =
+        `https://wa.me/${CONFIG.whatsappNumber}?text=${msg}`;
+      document.getElementById('success-sponsor').classList.add('visible');
+    } else {
+      // Email pre-filled
+      const subject = encodeURIComponent('Solicitud de información · Gala Marítima Panamá 2026');
+      const body = encodeURIComponent(
+        `Hola,\n\nMe interesa asistir a la Gala Marítima Panamá 2026.\n\n` +
+        `Nombre: ${data.nombre}\nCargo: ${data.cargo}\nEmpresa: ${data.empresa}\n` +
+        `Tipo de entrada: ${data.entrada}\n\nQuedo atento a su respuesta.`
+      );
+      document.getElementById('email-link-attendee').href =
+        `mailto:${CONFIG.contactEmail}?subject=${subject}&body=${body}`;
+      document.getElementById('success-attendee').classList.add('visible');
+    }
+
+    // Log to console (replace with real CRM integration)
+    console.log('Nuevo lead:', track, data);
+  }
+
+  // ── ENVÍO A SHEET.BEST / GOOGLE SHEETS ───────────────
+  async function sendToSheets(payload) {
+    if (!CONFIG.sheetBestURL || CONFIG.sheetBestURL === 'PEGAR_AQUI_TU_URL_DE_SHEET_BEST') {
+      throw new Error('Falta pegar la URL API de Sheet.best en CONFIG.sheetBestURL');
+    }
+
+    const enrichedPayload = {
+      timestamp: new Date().toISOString(),
+      ...payload,
+      userAgent: navigator.userAgent,
+      pageURL: window.location.href
+    };
+
+    try {
+      const response = await fetch(CONFIG.sheetBestURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(enrichedPayload)
+      });
+
+      const rawText = await response.text();
+      let result = null;
+      try {
+        result = rawText ? JSON.parse(rawText) : null;
+      } catch (_) {
+        result = rawText;
+      }
+
+      if (!response.ok) {
+        const detail = (result && (result.detail || result.message)) || rawText || 'Error desconocido';
+        throw new Error(detail);
+      }
+
+      console.log('Enviado a Sheet.best:', enrichedPayload, result);
+      return result;
+    } catch (err) {
+      console.error('Error enviando a Sheet.best:', err);
+      throw err;
+    }
+  }
+
+  // ── FORM SUBMIT ────────────────────────────────────
+  document.getElementById('form-sponsor').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    try {
+      if (!validateSponsor()) {
+        const firstError = document.querySelector('.field-input.error, .field-error.visible');
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      const btn = document.querySelector('#form-sponsor .submit-btn');
+      if (btn) { btn.disabled = true; btn.innerHTML = '<span>Enviando...</span>'; }
+      const data = collectSponsor();
+      await sendToSheets({ tipo: 'patrocinador', ...data });
+      if (btn) { btn.disabled = false; btn.innerHTML = '<span>Enviar información</span><span>→</span>'; }
+      showSuccess('sponsor', data);
+    } catch(err) {
+      console.error('Error en sponsor submit:', err);
+      const btn = document.querySelector('#form-sponsor .submit-btn');
+      if (btn) { btn.disabled = false; btn.innerHTML = '<span>Enviar información</span><span>→</span>'; }
+      alert('Error al enviar: ' + err.message);
+    }
+  });
+
+  document.getElementById('form-attendee').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!validateAttendee()) {
+      const firstError = document.querySelector('.field-input.error, .field-error.visible');
+      if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const btn = this.querySelector('.submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span>Enviando...</span>';
+
+    const data = collectAttendee();
+    await sendToSheets({ tipo: 'invitado', ...data });
+
+    btn.disabled = false;
+    showSuccess('attendee', data);
+  });
+
+  // Track se selecciona manualmente desde el portero
+
+  // ── RESIZE REPORTER (para Framer / iframe embed) ────
+  function reportHeight() {
+    const height = document.body.scrollHeight;
+    window.parent.postMessage({ type: 'gala-form-height', height: height }, '*');
+  }
+
+  // Reportar al cargar
+  reportHeight();
+
+  // Reportar cuando cambie el DOM (track seleccionado, errores, etc.)
+  const resizeObserver = new ResizeObserver(() => reportHeight());
+  resizeObserver.observe(document.body);
+</script>
+</body>
+</html>
